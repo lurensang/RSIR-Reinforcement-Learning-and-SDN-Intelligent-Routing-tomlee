@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: full_env",
+            "type": "python",
+            "request": "launch",
+            "program": "FatTree/full_env.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "Python: RL_threading",
             "type": "python",
             "request": "launch",
