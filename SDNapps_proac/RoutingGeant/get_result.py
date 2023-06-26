@@ -1,5 +1,5 @@
-from Q_routing import Q_routing
-from get_all_routes import get_best_nodes, get_best_net, get_all_best_routes, get_cost, count_routes, get_route
+from .Q_routing import Q_routing
+from .get_all_routes import get_best_nodes, get_best_net, get_all_best_routes, get_cost, count_routes, get_route
 from collections import Counter
 
 def get_result(R,Q,alpha,epsilon,n_episodes,start,end):

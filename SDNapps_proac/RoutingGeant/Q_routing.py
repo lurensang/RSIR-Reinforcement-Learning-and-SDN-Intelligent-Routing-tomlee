@@ -1,5 +1,5 @@
 import random
-from get_all_routes import get_best_nodes
+from .get_all_routes import get_best_nodes
 import numpy as np
 
 def update_Q(T,Q,current_state, next_state, alpha):

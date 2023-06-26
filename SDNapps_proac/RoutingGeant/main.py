@@ -1,6 +1,6 @@
-from get_dict import get_dict
-from get_R_Q import initial_R, initial_Q
-from get_result import get_result
+from .get_dict import get_dict
+from .get_R_Q import initial_R, initial_Q
+from .get_result import get_result
 import pandas as pd
 import time
 import json
@@ -40,12 +40,12 @@ def get_all_paths(data):
                 
                 if j[0] not in paths[i]:
                     paths[i][j[0]] = result["all_routes"][j[-1]]
-    with open('/home/controlador/ryu/ryu/app/SDNapps_proac/paths.json','w') as json_file:
+    with open('SDNapps_proac/paths.json','w') as json_file:
         json.dump(paths, json_file, indent=2)
     time_end = time.time()
     total_time = time_end - time_init
     
-    with open('/home/controlador/ryu/ryu/app/SDNapps_proac/times.txt','a') as txt_file:
+    with open('SDNapps_proac/times.txt','a') as txt_file:
         txt_file.write(str(total_time)+'\n')
 
     # For testing ---------------------------------

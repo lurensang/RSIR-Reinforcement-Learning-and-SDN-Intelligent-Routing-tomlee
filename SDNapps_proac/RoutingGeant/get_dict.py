@@ -74,7 +74,7 @@ def get_dict(data):
             links[A[i]].append(Z[i])
 
     mydict = links
-    with open('/home/controlador/ryu/ryu/app/SDNapps_proac/neighbors.csv', 'w') as csv_file:
+    with open('SDNapps_proac/neighbors.csv', 'w') as csv_file:
         writer = csv.writer(csv_file)
         for key, value in mydict.items():
            writer.writerow([key, value])
