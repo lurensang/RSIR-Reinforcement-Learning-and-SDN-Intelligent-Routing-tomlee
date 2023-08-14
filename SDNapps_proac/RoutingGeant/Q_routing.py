@@ -6,7 +6,7 @@ def update_Q(T,Q,current_state, next_state, alpha):
     current_t = T[current_state][next_state]
     current_q = Q[current_state][next_state]
     
-    #updating SARSA
+    # updating SARSA
     # best_next_action_val = min(Q[next_state].values())
     # for action in Q[next_state].keys():
     #     if Q[next_state][action] ==  best_next_action_val:
@@ -14,8 +14,8 @@ def update_Q(T,Q,current_state, next_state, alpha):
     # # print(best_next_action)
     # new_q = current_q + alpha * (current_t + gamma * Q[next_state][best_next_action] - current_q) #for each state, it will choose the minimun furture cost instead of maximum future reward SARSA
 
-    #updating Q-learning
-    new_q = current_q + alpha * (current_t + min(Q[next_state].values()) - current_q) #for each state,
+    # updating Q-learning
+    new_q = current_q + alpha * (current_t + min(Q[next_state].values()) - current_q) # for each state,
                                 #it will choose the minimun furture cost instead of maximum future reward.
     Q[current_state][next_state] = new_q
     return Q
@@ -24,14 +24,18 @@ def get_key_of_min_value(dic):
         min_val = min(dic.values())
         return [k for k, v in dic.items() if v == min_val]
 
-def Q_routing(T,Q,alpha,epsilon,n_episodes,start,end): #Fill Q table and explore all options
+def Q_routing(T, Q, alpha, epsilon, n_episodes, start, end):
+    '''
+    Fill Q table and explore all options
+    '''
+
     #--------------e-greedy decay---------------------------------
     # min_epsilon = 0.01
     # max_epsilon = 0.9
     # decay_rate = 0.001
-    episode_hops = {}
+    # episode_hops = {}
 
-    #T is network info
+    # T is network info R
     for e in range(1,n_episodes+1):
         # print("Episode {0}:".format(e))
         current_state = start
@@ -39,7 +43,7 @@ def Q_routing(T,Q,alpha,epsilon,n_episodes,start,end): #Fill Q table and explore
         stored_states = []
 
         while not goal:
-            #takes the next hops negihbors for state
+            # takes the next hops negihbors for state
             valid_moves = list(Q[current_state].keys())
             
             if len(valid_moves) <= 1:
@@ -49,9 +53,10 @@ def Q_routing(T,Q,alpha,epsilon,n_episodes,start,end): #Fill Q table and explore
                 if random.random() < epsilon:
                     next_state = best_action
                 else:
+                    # take random action
                     valid_moves.pop(valid_moves.index(best_action))
                     next_state = random.choice(valid_moves)
-            Q = update_Q(T,Q,current_state, next_state, alpha)
+            Q = update_Q(T, Q, current_state, next_state, alpha)
             current_state = next_state
             # print(next_state)
             stored_states.append(next_state)
