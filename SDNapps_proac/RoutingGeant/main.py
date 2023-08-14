@@ -5,9 +5,10 @@ import pandas as pd
 import time
 import json
 
-def RL_forwarding(data, src, dst):
+# def RL_forwarding(data, src, dst):
     
-    graph = get_dict(data)
+#     graph = get_dict(data)
+def RL_forwarding(graph, src, dst):
 
     A = graph["A"]
     Z = graph["Z"]
@@ -21,13 +22,13 @@ def RL_forwarding(data, src, dst):
     epsilon = 0.8 #greedy policy
     n_episodes = 300
 
-    return get_result(R,Q,alpha,epsilon,n_episodes,src,dst)
+    return get_result(R, Q, alpha, epsilon, n_episodes, src, dst)
 
 def get_all_paths(data):
     time_init = time.time()
     graph = get_dict(data)
     links = graph["links"]
-    sws = list(links.keys())
+    sws = list(links.keys()) # all nodes
     
     paths = {}
     for i in sws:
@@ -36,7 +37,8 @@ def get_all_paths(data):
             if i != j:
                 j = [j]
                 time0 = time.time()
-                result = RL_forwarding(data,i,j)
+                # result = RL_forwarding(data,i,j)
+                result = RL_forwarding(graph,i,j)
                 
                 if j[0] not in paths[i]:
                     paths[i][j[0]] = result["all_routes"][j[-1]]

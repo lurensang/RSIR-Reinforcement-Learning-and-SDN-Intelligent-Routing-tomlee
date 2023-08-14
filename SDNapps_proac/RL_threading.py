@@ -1,11 +1,14 @@
-import sys
-sys.path.insert(0,'/home/controlador/ryu/ryu/app/SDNapps_proac/RoutingGeant')
-from RoutingGeant.main import get_all_paths
+# import sys
+# sys.path.insert(0,'/home/controlador/ryu/ryu/app/SDNapps_proac/RoutingGeant')
+
 import pandas as pd
 import time
 import threading 
 import json,ast
 import csv
+
+from RoutingGeant.main import get_all_paths
+
 # THREADING
 
 def paths_():
@@ -22,7 +25,7 @@ def get_paths_base():
         paths_base = ast.literal_eval(json.dumps(paths_dict))
         return paths_base
 
-def get_paths_RL():
+def get_paths_RL() -> dict:
     file_RL = 'SDNapps_proac/paths.json'
     with open(file_RL,'r') as json_file:
         paths_dict = json.load(json_file)
@@ -60,18 +63,19 @@ def calc_all_stretch(cont):
                     add_stretch_RL, mul_stretch_RL = stretch(paths_RL, paths_base, src, dst)
                     if add_stretch_RL != 0:
                         cont_RL += 1
-                    print('Additive stretch RL: ', add_stretch_RL)
-                    print('Multi stretch RL: ', mul_stretch_RL)
+                    # print('Additive stretch RL: ', add_stretch_RL)
+                    # print('Multi stretch RL: ', mul_stretch_RL)
                     file.writerow([src,dst,add_stretch_RL,mul_stretch_RL])
     total_time = time.time() - a
     return total_time
 
 def RL_thread():
     cont = 0
+    data = pd.read_csv("SDNapps_proac/net_info.csv")
     while cont < 836:
     # while cont < 30:
-        a = time.time()
-        data = pd.read_csv("SDNapps_proac/net_info.csv")
+        start_time = time.time()
+
         paths, time_RL = get_all_paths(data)
         # print('time_RL',time_RL)
         time_stretch = calc_all_stretch(cont)
@@ -81,6 +85,7 @@ def RL_thread():
         else:
             time.sleep(10 - time_RL - time_stretch)
         cont = cont + 1
-        # print(time.time()-a)
+        print('Iteration {}: {:.1f} seconds'.format(cont, time.time() - start_time))
+
 RL_thread()
 print("RL-thread ended")

@@ -1,6 +1,9 @@
 from collections import Counter
 
 def get_single_dict(dic):
+    '''
+    return keys for the dic
+    '''
     single_link = {}
     min_value = min(dic.values())
     for key in dic.keys():
@@ -8,24 +11,34 @@ def get_single_dict(dic):
             single_link[key] = dic[key]
     return single_link.keys()
 
-def get_best_nodes(Q,start,end):
+def get_best_nodes(Q, start, end):
+    '''
+    returns a list of nodes 
+    '''
     next_level = [start]
     node_use = [start]
-    while list(set(next_level) & set(end)) == []: #while dest is not in next level exploration do:
+    while list(set(next_level) & set(end)) == []: 
+        # while dest is not in next level exploration do:
         temp_level = []
         for i in next_level:
             temp_level += get_single_dict(Q[i])
         next_level = list(set(temp_level))
-        node_use += next_level #get the whole next exploration level... all neighbors to explore
+        node_use += next_level # get the whole next exploration level... all neighbors to explore
     return list(set(node_use))
 
-def get_best_net(Q,nodes): #build a dict with the best route found
+def get_best_net(Q, nodes): 
+    '''
+    build a dict with the best route found
+    '''
     best_net = {}
     for i in nodes:
-        best_net[i] = list(set( get_single_dict(Q[i]) ) & set(nodes))
+        best_net[i] = list(set(get_single_dict(Q[i])) & set(nodes))
     return best_net
 
-def get_all_best_routes(graph,start,end,max_depth): #get all the routes that reach the dest
+def get_all_best_routes(graph,start,end,max_depth): 
+    '''
+    get all the routes that reach the dest
+    '''
     past_path = []
     # maintain a queue of paths
     queue = []
@@ -89,11 +102,14 @@ def count_routes(routes): #encuentra cuantas veces se alcanzo el dest
     
         
 
-def get_route(Q,start,end):
-    """ input is  Q-table is like:{1: {2: 0.5, 3: 3.8},
-                                   2: {1: 5.9, 5: 10}} """   
+def get_route(Q, start, end):
+    """ 
+    input is  Q-table is like:  {1: {2: 0.5, 3: 3.8},
+                                2: {1: 5.9, 5: 10}} 
+    """   
     single_route = [start]
-    while single_route[-1] not in end: #get route from start with min q(values) until reach end
+    while single_route[-1] not in end: 
+        # get route from start with min q(values) until reach end
         next_step = min(Q[single_route[-1]],key=Q[single_route[-1]].get)
         single_route.append(next_step)
         if len(single_route) > 2 and single_route[-1] in single_route[:-1]:
