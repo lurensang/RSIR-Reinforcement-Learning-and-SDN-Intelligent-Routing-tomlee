@@ -35,7 +35,14 @@ def reward(beta1, beta2, beta3, bwd, delay, pkloss, cost_action):
     return rew
 
 def get_dict(data): 
+    '''
+    returns a dictionary: 
     
+    {"A":A,
+    "Z":Z,
+    "weight": weight_,
+    "links":links}
+    '''
     # read data from dataframe
     A_0 = data["node1"].values.tolist() # get nodes 
     Z_0 = data["node2"].values.tolist() # get neighbors
