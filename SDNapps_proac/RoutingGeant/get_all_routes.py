@@ -2,7 +2,7 @@ from collections import Counter
 
 def get_single_dict(dic):
     '''
-    return keys for the dic
+    return keys with minimum value in dic
     '''
     single_link = {}
     min_value = min(dic.values())
@@ -13,7 +13,7 @@ def get_single_dict(dic):
 
 def get_best_nodes(Q, start, end):
     '''
-    returns a list of nodes 
+    returns a list of nodes with the best path for each step
     '''
     next_level = [start]
     node_use = [start]
@@ -46,7 +46,7 @@ def get_all_best_routes(graph,start,end,max_depth):
     queue.append([start])
     while queue:
         # get the first path from the queue
-        path = queue.pop(0) #takes las value from queue and removes it
+        path = queue.pop(0) # takes las value from queue and removes it
         # get the last node from the path
         node = path[-1]
         # path found
@@ -66,7 +66,7 @@ def get_all_best_routes(graph,start,end,max_depth):
             new_path.append(adjacent)
             if len(new_path) >= max_depth and new_path[-1] not in end:
                 break
-           # print new_path
+            # print new_path
             queue.append(new_path)
             past_path.append(new_path)
     
@@ -77,19 +77,19 @@ def get_all_best_routes(graph,start,end,max_depth):
     return best_paths
     
     
-def get_cost(R,route): #return the total cost of each route found
+def get_cost(R,route): # return the total cost of each route found
     cost = 0
     for i in range(len(route)-1):
         cost += R[route[i]][route[i+1]]
     return round(cost,3)
 
-def count_routes(routes): #encuentra cuantas veces se alcanzo el dest
+def count_routes(routes): # encuentra cuantas veces se alcanzo el dest
     ends_find = []
     all_routes = {}
     for i in range(len(routes)):
         ends_find.append(routes[i][-1])
     
-    count =  dict(Counter(ends_find)) #says how many times a value is used in the dict
+    count =  dict(Counter(ends_find)) # says how many times a value is used in the dict
     
     ends = list(set(ends_find))
     for i in ends:
